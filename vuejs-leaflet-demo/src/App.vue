@@ -1,23 +1,34 @@
 <template>
   <div id="my-map">
-    <leaflet-map v-bind:show-map-layer="showLayer"></leaflet-map>
+    <mapbox-map v-if="useMapbox" v-bind:show-map-layer="showLayer"></mapbox-map>
+    <leaflet-map v-else v-bind:show-map-layer="showLayer"></leaflet-map>
     <div id="map-control">
-      <input type="checkbox" id="checkbox" v-model="showLayer">
-      <label for="checkbox">Show Layer</label>
+      <p>
+        <input type="checkbox" id="checkbox-lf" v-model="showLayer">
+        <label for="checkbox-lf">Show GeoJSON</label>
+      </p>
+      <p>
+        <input type="checkbox" id="checkbox-mp" v-model="useMapbox">
+        <label for="checkbox-mp">Use mapbox-gl</label>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-import Map from './components/Map'
+import LeafletMap from './components/LeafletMap'
+import MapboxMap from './components/MapboxMap'
+
 
 export default {
   name: 'app',
   components: {
-    'leaflet-map': Map,
+    'leaflet-map': LeafletMap,
+    'mapbox-map': MapboxMap
   },
   data () {
     return {
+      useMapbox: false,
       showLayer: false
     }
   }
